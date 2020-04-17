@@ -1,3 +1,3 @@
-module github.com/RMIO2020/Utils
+module github.com/RMIO2020/Go-Utils
 
 go 1.13
