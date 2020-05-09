@@ -7,13 +7,9 @@ import (
 	"time"
 )
 
-const (
-	SECRET = "Rockx"
-)
-
 // MD5 使用md5对数据进行加密
 func MD5(str string) string {
-	md5str := fmt.Sprintf("%x", md5.Sum(append([]byte(str), []byte(SECRET)...)))
+	md5str := fmt.Sprintf("%x", md5.Sum([]byte(str)))
 	return md5str
 }
 
