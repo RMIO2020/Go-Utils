@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"fmt"
 	"github.com/google/uuid"
+	"math/rand"
 	"time"
 )
 
@@ -19,7 +20,30 @@ func SwitchTimeStampToStr(timeStamp int64) string {
 	return t.Format("2006-01-02 15:04:05")
 }
 
-// 生成uuid
+// Uid 生成uuid
 func Uid() string {
 	return uuid.Must(uuid.NewRandom()).String()
+}
+
+var defaultLetters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+
+// RandomString 随机字符串
+func RandomString(n int, allowedChars ...[]rune) string {
+	var letters []rune
+	if len(allowedChars) == 0 {
+		letters = defaultLetters
+	} else {
+		letters = allowedChars[0]
+	}
+
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(b)
+}
+
+// 生成订单id
+func CreateOrderSn() string {
+	return time.Now().Format("20060102150405") + RandomString(6)
 }
