@@ -34,7 +34,7 @@ func TestCobo_GetGetAccountList(t *testing.T) {
 }
 
 func TestCobo_GetAccountInfo(t *testing.T) {
-	Coin := "TETH"
+	Coin := "XTN"
 
 	info, err := Co.GetAccountInfo(Coin)
 
@@ -44,7 +44,7 @@ func TestCobo_GetAccountInfo(t *testing.T) {
 }
 
 func TestCobo_NewAddress(t *testing.T) {
-	Coin := "TETH"
+	Coin := "XTN"
 
 	Address, err := Co.NewAddress(Coin)
 
@@ -54,7 +54,7 @@ func TestCobo_NewAddress(t *testing.T) {
 }
 
 func TestCobo_AddressHistory(t *testing.T) {
-	Coin := "TETH"
+	Coin := "XTN"
 
 	list, err := Co.AddressHistory(Coin)
 
@@ -67,7 +67,7 @@ func TestCobo_AddressHistory(t *testing.T) {
 }
 
 func TestCobo_ValidAddress(t *testing.T) {
-	Coin := "TETH"
+	Coin := "XTN"
 	Address := "0x5a65eeae67c42140602bf1fae46a0768a4e592c6"
 
 	result, err := Co.ValidAddress(Coin, Address)
@@ -75,4 +75,19 @@ func TestCobo_ValidAddress(t *testing.T) {
 	fmt.Printf("err : %+v \n", err)
 
 	fmt.Printf("result : %+v \n", result)
+}
+
+func TestCobo_FindTransaction(t *testing.T) {
+
+	list, err := Co.FindTransactionList(&TransactionWhere{})
+
+	fmt.Printf("err : %+v \n", err)
+
+	fmt.Printf("list : %+v \n", list)
+
+	for _, v := range list {
+		tr, err := Co.FindTransaction(v.Id)
+		fmt.Printf("err : %+v \n", err)
+		fmt.Printf("tr : %+v \n", tr)
+	}
 }
