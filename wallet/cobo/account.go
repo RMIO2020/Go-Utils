@@ -48,21 +48,21 @@ type Address struct {
 	Address string `json:"address" binding:"address"`
 }
 
-func (Co Cobo) NewAddress(Coin string) (Address *Address, err error) {
+func (Co *Cobo) NewAddress(Coin string) (Address *Address, err error) {
 	err = CheckBase(Co.Request(POST, NewAddressUrl, Params{
 		"coin": Coin,
 	}), &Address)
 	return
 }
 
-func (Co Cobo) AddressHistory(Coin string) (AddressList []*Address, err error) {
+func (Co *Cobo) AddressHistory(Coin string) (AddressList []*Address, err error) {
 	err = CheckBase(Co.Request(GET, AddressHistoryUrl, Params{
 		"coin": Coin,
 	}), &AddressList)
 	return
 }
 
-func (Co Cobo) ValidAddress(Coin, Address string) (result bool, err error) {
+func (Co *Cobo) ValidAddress(Coin, Address string) (result bool, err error) {
 	err = CheckBase(Co.Request(GET, ValidAddress, Params{
 		"coin":    Coin,
 		"address": Address,
