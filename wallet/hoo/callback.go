@@ -11,14 +11,15 @@ type Transaction struct {
 	TrxN            string `json:"trx_n" binding:"required"`
 	Confirmations   string `json:"confirmations" binding:"required"`
 	FromAddress     string `json:"from_address" binding:"required"`
-	ToAddress       string `json:"toAddress" binding:"required"`
+	ToAddress       string `json:"to_address" binding:"required"`
 	Memo            string `json:"memo" binding:"required"`
 	Amount          string `json:"amount" binding:"required"`
 	Fee             string `json:"fee" binding:"required"`
-	ContractAddress string `json:"contractAddress" binding:"required"`
-	OuterOrderNo    string `json:"outerOrderNo" binding:"required"`
-	ConfirmTime     string `json:"confirmTime" binding:"required"`
+	ContractAddress string `json:"contract_address" binding:"required"`
+	OuterOrderNo    string `json:"outer_order_no" binding:"required"`
+	ConfirmTime     string `json:"confirm_time" binding:"required"`
 	Message         string `json:"message" binding:"required"`
+	Status          string
 	Currency        string
 	Protocol        string
 }
