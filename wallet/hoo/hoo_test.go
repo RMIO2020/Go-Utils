@@ -9,7 +9,7 @@ const (
 	ClientId     = "UvBeD3EamTaGLM6fx32ZESyGZJnLzN"
 	ClientSecret = "Cibs1MK4paoM3ArkkQ4TS5h6n6WcadWZqPJmsBcx38BZQoDhFJ"
 	Host         = "https://hoo.com"
-	HotAddress   = "0x8aAeDDf30A3Fd059574FDc8Bc1936072b182A1C4"
+	HotAddress   = "0x000bb4e5694e241a06e9f42c583205d073a046fc"
 )
 
 var H = NewHoo(ClientId, ClientSecret, Host)
@@ -41,7 +41,7 @@ func TestWithdraw(t *testing.T) {
 	p := &WithdrawWhere{
 		CoinName:  "ETH",
 		TokenName: "ETH",
-		OrderId:   "Test004",
+		OrderId:   "Test006",
 		Amount:    "0.001",
 		ToAddress: HotAddress,
 	}
