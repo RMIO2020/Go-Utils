@@ -41,7 +41,7 @@ func TestWithdraw(t *testing.T) {
 	p := &WithdrawWhere{
 		CoinName:  "ETH",
 		TokenName: "ETH",
-		OrderId:   "Test006",
+		OrderId:   "Test007",
 		Amount:    "0.001",
 		ToAddress: HotAddress,
 	}

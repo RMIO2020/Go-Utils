@@ -12,10 +12,10 @@ type Transaction struct {
 	Confirmations   string `json:"confirmations" binding:"required"`
 	FromAddress     string `json:"from_address" binding:"required"`
 	ToAddress       string `json:"to_address" binding:"required"`
-	Memo            string `json:"memo" binding:"required"`
+	Memo            string `json:"memo"`
 	Amount          string `json:"amount" binding:"required"`
-	Fee             string `json:"fee" binding:"required"`
-	ContractAddress string `json:"contract_address" binding:"required"`
+	Fee             string `json:"fee"`
+	ContractAddress string `json:"contract_address"`
 	OuterOrderNo    string `json:"outer_order_no" binding:"required"`
 	ConfirmTime     string `json:"confirm_time" binding:"required"`
 	Message         string `json:"message" binding:"required"`
