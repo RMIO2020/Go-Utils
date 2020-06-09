@@ -2,8 +2,10 @@ package utils
 
 import (
 	"crypto/md5"
+	"encoding/base64"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/skip2/go-qrcode"
 	"math/rand"
 	"time"
 )
@@ -43,7 +45,17 @@ func RandomString(n int, allowedChars ...[]rune) string {
 	return string(b)
 }
 
-// 生成订单id
+// CreateOrderSn 生成订单id
 func CreateOrderSn() string {
 	return time.Now().Format("20060102150405") + RandomString(6)
+}
+
+// CreateQrCode 生成二维码base64
+func CreateQrCodeBase64(username string, secret string, issuer string) (encoded string, err error) {
+	png, err := qrcode.Encode(fmt.Sprintf("otpauth://totp/%v-%v?secret=%v&issuer=%v", username, issuer, secret, issuer), qrcode.Medium, 256)
+	if err != nil {
+		return
+	}
+	encoded = fmt.Sprintf("data:image/jpg;base64,%v", base64.StdEncoding.EncodeToString(png))
+	return
 }
