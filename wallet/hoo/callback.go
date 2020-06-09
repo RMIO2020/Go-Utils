@@ -22,4 +22,6 @@ type Transaction struct {
 	Status          string
 	Currency        string
 	Protocol        string
+	WalletId        int64
+	Uid             string
 }
