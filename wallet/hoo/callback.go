@@ -24,4 +24,5 @@ type Transaction struct {
 	Protocol        string
 	WalletId        int64
 	Uid             string
+	Platform        string
 }
