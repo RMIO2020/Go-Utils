@@ -46,7 +46,8 @@ func TestWithdraw(t *testing.T) {
 		//ToAddress: HotAddress,
 		ToAddress: "0x000bb4e5694e241a06e9f42c583205d073a046fc",
 	}
-	Address, err := H.SetWithdraw(p)
+	err, hooResp, hooData := H.SetWithdraw(p)
 	fmt.Println("err", err)
-	fmt.Println("Address ", Address)
+	fmt.Println("Address ", hooResp)
+	fmt.Println("Address ", hooData)
 }
