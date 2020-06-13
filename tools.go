@@ -52,7 +52,13 @@ func CreateOrderSn() string {
 
 // CreateQrCode 生成二维码base64
 func CreateQrCodeBase64(username string, secret string, issuer string) (encoded string, err error) {
-	png, err := qrcode.Encode(fmt.Sprintf("otpauth://totp/%v-%v?secret=%v&issuer=%v", username, issuer, secret, issuer), qrcode.Medium, 256)
+	q, err := qrcode.New(fmt.Sprintf("otpauth://totp/%v-%v?secret=%v&issuer=%v", username, issuer, secret, issuer), qrcode.Medium)
+	if err != nil {
+		return
+	}
+	// Optionally, disable the QR Code border.
+	q.DisableBorder = true
+	png, err := q.PNG(256)
 	if err != nil {
 		return
 	}
