@@ -26,3 +26,26 @@ type Transaction struct {
 	Uid             string
 	Platform        string
 }
+
+func SetTransactionParams(Data *Transaction) (params *Params) {
+	var Par = Params{}
+	params = &Par
+	Par["chain_name"] = Data.ChainName
+	Par["coin_name"] = Data.CoinName
+	Par["alias"] = Data.Alias
+	Par["trad_type"] = Data.TradType
+	Par["block_height"] = Data.BlockHeight
+	Par["transaction_id"] = Data.TransactionId
+	Par["trx_n"] = Data.TrxN
+	Par["confirmations"] = Data.Confirmations
+	Par["from_address"] = Data.FromAddress
+	Par["to_address"] = Data.ToAddress
+	Par["memo"] = Data.Memo
+	Par["amount"] = Data.Amount
+	Par["fee"] = Data.Fee
+	Par["contract_address"] = Data.ContractAddress
+	Par["outer_order_no"] = Data.OuterOrderNo
+	Par["confirm_time"] = Data.ConfirmTime
+	Par["message"] = Data.Message
+	return
+}
