@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	//GET  = "GET"
+	GET  = "GET"
 	POST = "POST"
 )
 
