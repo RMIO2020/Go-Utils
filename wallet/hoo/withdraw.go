@@ -1,6 +1,7 @@
 package hoo
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 )
@@ -48,17 +49,27 @@ func (H *Hoo) SetWithdrawWhere(Data *WithdrawWhere) (params *Params, err error) 
 	return
 }
 
-func (H *Hoo) SetWithdraw(Data *WithdrawWhere) (result bool, err error) {
+type BaseResp struct {
+	Code    string `json:"code"`
+	Message string `json:"message"`
+	Data    map[string]string
+}
+
+func (H *Hoo) SetWithdraw(Data *WithdrawWhere) (err error, hooResp string, hooData map[string]string) {
 	params, err := H.SetWithdrawWhere(Data)
 	if err != nil {
 		return
 	}
 	fmt.Printf("Request Params is  %+v \n", params)
-	reData, err := H.Request(POST, WithdrawUrl, *params)
+	hooResp, err = H.Request(POST, WithdrawUrl, *params)
 	if err != nil {
 		return
 	}
-	fmt.Println("CheckBase....", reData)
-	err = CheckBase(reData, &result)
+	var data BaseResp
+	_ = json.Unmarshal([]byte(hooResp), &data)
+	hooData = data.Data
+	if data.Code != "10000" {
+		err = errors.New(data.Message)
+	}
 	return
 }

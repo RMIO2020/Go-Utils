@@ -41,13 +41,15 @@ func TestWithdraw(t *testing.T) {
 	p := &WithdrawWhere{
 		CoinName:  "ETH",
 		TokenName: "ETH",
-		OrderId:   "Test007",
+		OrderId:   "sup-min165074399724041972",
 		Amount:    "0.001",
-		ToAddress: HotAddress,
+		//ToAddress: HotAddress,
+		ToAddress: "0x000bb4e5694e241a06e9f42c583205d073a046fc",
 	}
-	Address, err := H.SetWithdraw(p)
+	err, hooResp, hooData := H.SetWithdraw(p)
 	fmt.Println("err", err)
-	fmt.Println("Address ", Address)
+	fmt.Println("Address ", hooResp)
+	fmt.Println("Address ", hooData)
 }
 
 func TestHoo_GetKline(t *testing.T) {
