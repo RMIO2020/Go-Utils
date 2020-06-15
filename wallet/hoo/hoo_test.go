@@ -61,3 +61,15 @@ func TestHoo_GetKline(t *testing.T) {
 	fmt.Printf("err %+v \n", err)
 	fmt.Printf("Kline %+v \n", Kline)
 }
+
+func TestHoo_GetKline(t *testing.T) {
+	where := &KlineWhere{
+		Symbol: "BTC_USDT",
+		Type:   "5Min",
+	}
+
+	Klin, err := H.GetKline(where)
+
+	fmt.Println("err ", err)
+	fmt.Println("Klin ", Klin)
+}
