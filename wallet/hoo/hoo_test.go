@@ -49,3 +49,13 @@ func TestWithdraw(t *testing.T) {
 	fmt.Println("err", err)
 	fmt.Println("Address ", Address)
 }
+
+func TestHoo_GetKline(t *testing.T) {
+	Kline, err := H.GetKline(&KlineWhere{
+		Symbol: "BTC-USDT",
+		Type:   "5Min",
+	})
+
+	fmt.Printf("err %+v \n", err)
+	fmt.Printf("Kline %+v \n", Kline)
+}
