@@ -6,10 +6,9 @@ import (
 )
 
 const (
-	ClientId     = "UvBeD3EamTaGLM6fx32ZESyGZJnLzN"
-	ClientSecret = "Cibs1MK4paoM3ArkkQ4TS5h6n6WcadWZqPJmsBcx38BZQoDhFJ"
-	Host         = "https://hoo.com"
-	HotAddress   = "0x000bb4e5694e241a06e9f42c583205d073a046fc"
+	ClientId     = ""
+	ClientSecret = ""
+	Host         = ""
 )
 
 var H = NewHoo(ClientId, ClientSecret, Host)
@@ -39,13 +38,15 @@ func TestNewAddress(t *testing.T) {
 
 func TestWithdraw(t *testing.T) {
 	p := &WithdrawWhere{
-		CoinName:  "ETH",
-		TokenName: "ETH",
-		OrderId:   "Test007",
-		Amount:    "0.001",
-		ToAddress: HotAddress,
+		CoinName:        "USDT",
+		TokenName:       "USDT-ERC20",
+		OrderId:         "sup-min26934277t",
+		Amount:          "0.01",
+		ToAddress:       "0x00f49805af7c2e9c18f024b4cb3c94a49a1ff2d1",
+		ContractAddress: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
 	}
-	Address, err := H.SetWithdraw(p)
+	err, hooResp, hooData := H.SetWithdraw(p)
 	fmt.Println("err", err)
-	fmt.Println("Address ", Address)
+	fmt.Println("Address ", hooResp)
+	fmt.Println("Address ", hooData)
 }
