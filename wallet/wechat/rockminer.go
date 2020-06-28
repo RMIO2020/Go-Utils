@@ -1,9 +1,15 @@
 package wechat
 
 import (
+	"encoding/json"
+	"errors"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
+	"github.com/RMIO2020/Go-Wallet-Service/common/helper/rsa"
+	"github.com/yuchenfw/gocrypt"
 	"strconv"
 )
+
+const RMPayUrl = "https://api.rockminer.com/app/pay/confirm-pay"
 
 type ThirdPayToRM struct {
 	OrderSn     string  `json:"order_sn"`
@@ -15,9 +21,35 @@ type ThirdPayToRM struct {
 	Client      int64   `json:"client"`
 }
 
-func RMPay(Params *ThirdPayToRM) {
-	var params = request.ReqParams{}
+type BaseReq struct {
+	Data string
+	Sign string
+}
 
+type ReqData struct {
+	RetCode int
+	RetData string
+	RetMsg  string
+}
+
+func RMPay(Params *ThirdPayToRM, RSA *rsa.Crypt) (result string, err error) {
+	params := getParams(Params)
+
+	RepParams, err := getRepParams(params, RSA)
+	if err != nil {
+		return
+	}
+
+	result, err = request.Request(request.POST, RMPayUrl, RepParams)
+	if err != nil {
+		return
+	}
+	result, err = checkBase(result, RSA)
+	return
+}
+
+func getParams(Params *ThirdPayToRM) request.ReqParams {
+	var params = request.ReqParams{}
 	params["order_sn"] = Params.OrderSn
 	params["user_id"] = Params.UserId
 	params["payment_type"] = strconv.FormatInt(Params.PaymentType, 10)
@@ -25,4 +57,59 @@ func RMPay(Params *ThirdPayToRM) {
 	params["order_type"] = strconv.FormatInt(Params.OrderType, 10)
 	params["lang"] = Params.Lang
 	params["client"] = strconv.FormatInt(Params.Client, 10)
+
+	return params
+}
+
+func getRepParams(params request.ReqParams, RSA *rsa.Crypt) (request.ReqParams, error) {
+	var RsaParams = request.ReqParams{}
+	data, _ := json.Marshal(params)
+
+	sign, err := RSA.Sign(string(data), gocrypt.SHA256, gocrypt.Base64)
+	if err != nil {
+		return nil, err
+	}
+	RsaParams["sign"] = sign
+
+	data2, err := RSA.Encrypt(string(data), gocrypt.Base64)
+	if err != nil {
+		return nil, err
+	}
+	RsaParams["data"] = data2
+	return RsaParams, nil
+}
+
+func checkBase(Message string, RSA *rsa.Crypt) (ReData string, err error) {
+	var data BaseReq
+	err = json.Unmarshal([]byte(Message), &data)
+	if err != nil {
+		return
+	}
+
+	data2, err := RSA.Decrypt(data.Data, gocrypt.Base64)
+	if err != nil {
+		return
+	}
+
+	verifySign, err := RSA.VerifySign(data2, gocrypt.SHA256, data.Sign, gocrypt.Base64)
+	if err != nil {
+		return
+	}
+
+	if !verifySign {
+		err = errors.New("verifySign err")
+		return
+	}
+
+	var data3 ReqData
+	err = json.Unmarshal([]byte(data2), &data3)
+	if err != nil {
+		return
+	}
+	if data3.RetCode != 0 {
+		err = errors.New(data3.RetMsg)
+		return
+	}
+	ReData = data3.RetData
+	return
 }
