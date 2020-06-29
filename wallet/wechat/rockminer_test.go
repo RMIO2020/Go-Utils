@@ -27,7 +27,7 @@ func TestRMPay(t *testing.T) {
 		UserId:      "$2y$13$W6xCSp72rHldAqIXLbuyFuLkVny/q/NRLpWOQGQgtUm.SIRxuAiOO",
 		PaymentType: 11,
 		PayAmount:   1,
-		OrderType:   2,
+		OrderType:   1,
 		Lang:        "en",
 		Client:      1,
 	}
