@@ -2,6 +2,7 @@ package wechat
 
 import (
 	"encoding/json"
+	"errors"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/rsa"
 	"github.com/mitchellh/mapstructure"
@@ -41,6 +42,7 @@ type PayUrl struct {
 }
 
 func GetPayUrl(Params *ThirdPayToRM) (Url string, err error) {
+	Url = ""
 	params := getParams(Params)
 	url := RMProtocol + RMHOST + RMPayUrl
 	result, err := request.Request(request.POST, url, params)
@@ -89,6 +91,10 @@ func checkBase(Message string, result interface{}) (err error) {
 	var data BaseReq
 	err = json.Unmarshal([]byte(Message), &data)
 	if err != nil {
+		return
+	}
+	if data.RetCode != 0 {
+		err = errors.New(data.RetMsg)
 		return
 	}
 	err = mapstructure.Decode(data.RetData, &result)
