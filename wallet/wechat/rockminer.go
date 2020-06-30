@@ -3,17 +3,22 @@ package wechat
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/rsa"
 	"github.com/yuchenfw/gocrypt"
 	"strconv"
 )
 
-const RMPayUrl = "https://api.rockminer.com/app/pay/confirm-pay"
+const (
+	RMProtocol = "https://"
+	RMHOST     = "api.rockminer.com"
+	RMPayUrl   = "/app/pay/confirm-pay"
+)
 
 type ThirdPayToRM struct {
 	OrderSn     string  `json:"order_sn"`
-	UserId      string  `json:"user_id"`
+	Token       string  `json:"token"`
 	PaymentType int64   `json:"payment_type"`
 	PayAmount   float64 `json:"pay_amount"`
 	OrderType   int64   `json:"order_type"`
@@ -32,6 +37,18 @@ type ReqData struct {
 	RetMsg  string
 }
 
+func GetPayUrl(Params *ThirdPayToRM, RSA *rsa.Crypt) (PayUrl string, err error) {
+	params := getParams(Params)
+	RepParams, err := getRepParams(params, RSA)
+	if err != nil {
+		return
+	}
+	url := RMProtocol + RMHOST + RMPayUrl
+	sorted := request.SortParams(RepParams)
+	PayUrl = url + "?" + sorted
+	return
+}
+
 func RMPay(Params *ThirdPayToRM, RSA *rsa.Crypt) (result string, err error) {
 	params := getParams(Params)
 
@@ -40,7 +57,9 @@ func RMPay(Params *ThirdPayToRM, RSA *rsa.Crypt) (result string, err error) {
 		return
 	}
 
-	result, err = request.Request(request.POST, RMPayUrl, RepParams)
+	url := RMProtocol + RMHOST + RMPayUrl
+	result, err = request.Request(request.GET, url, RepParams)
+	fmt.Printf("result %+v \n", result)
 	if err != nil {
 		return
 	}
@@ -51,7 +70,7 @@ func RMPay(Params *ThirdPayToRM, RSA *rsa.Crypt) (result string, err error) {
 func getParams(Params *ThirdPayToRM) request.ReqParams {
 	var params = request.ReqParams{}
 	params["order_sn"] = Params.OrderSn
-	params["user_id"] = Params.UserId
+	params["token"] = Params.Token
 	params["payment_type"] = strconv.FormatInt(Params.PaymentType, 10)
 	params["pay_amount"] = strconv.FormatFloat(Params.PayAmount, 'G', -1, 64)
 	params["order_type"] = strconv.FormatInt(Params.OrderType, 10)

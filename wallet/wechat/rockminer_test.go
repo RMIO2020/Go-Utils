@@ -24,7 +24,7 @@ func TestRMPay(t *testing.T) {
 	RSA := rsa.NewRSACrypt()
 	params := &ThirdPayToRM{
 		OrderSn:     "test2",
-		UserId:      "$2y$13$W6xCSp72rHldAqIXLbuyFuLkVny/q/NRLpWOQGQgtUm.SIRxuAiOO",
+		Token:       "Rockminer-test",
 		PaymentType: 11,
 		PayAmount:   1,
 		OrderType:   1,
