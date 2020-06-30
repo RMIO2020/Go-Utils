@@ -11,8 +11,8 @@ import (
 )
 
 const (
-	RMProtocol = "https://"
-	RMHOST     = "api.rockminer.com"
+	RMProtocol = "http://"
+	RMHOST     = "api.rockminer.cn"
 	RMPayUrl   = "/open_api/third-pay/wechat"
 )
 
