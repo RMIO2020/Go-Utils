@@ -65,7 +65,7 @@ func getParams(Params *ThirdPayToRM) request.ReqParams {
 	params["lang"] = Params.Lang
 	params["platform"] = Params.Platform
 	params["client"] = strconv.FormatInt(Params.Client, 10)
-
+	params["process_type"] = strconv.FormatInt(Params.ProcessType, 10)
 	return params
 }
 

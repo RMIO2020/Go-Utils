@@ -23,13 +23,13 @@ func TestRMPay(t *testing.T) {
 	params := &ThirdPayToRM{
 		Platform:    "pin-min",
 		OrderSn:     "test2",
-		Token:       "eN8B8ZZ2xZfLUi8NGlDSeDoGtM4pVOGd",
+		Token:       "TZcJ0hB9LnMOS3r9hrPqP9o9Upmhehhv",
 		PaymentType: 11,
-		PayAmount:   1,
+		PayAmount:   0.01,
 		OrderType:   1,
 		Lang:        "en",
 		Client:      1,
-		ProcessType: 3,
+		ProcessType: 4,
 	}
 
 	result, err := GetPayUrl(params)
