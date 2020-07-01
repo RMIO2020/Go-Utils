@@ -22,7 +22,7 @@ func Init() {
 func TestRMPay(t *testing.T) {
 	params := &ThirdPayToRM{
 		Platform:    "pin-min",
-		OrderSn:     "test2",
+		OrderSn:     "test3",
 		Token:       "TZcJ0hB9LnMOS3r9hrPqP9o9Upmhehhv",
 		PaymentType: 11,
 		PayAmount:   0.01,
