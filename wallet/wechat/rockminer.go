@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/rsa"
-	"github.com/RMIO2020/Go-Wallet-Service/config"
 	"github.com/mitchellh/mapstructure"
 	"github.com/yuchenfw/gocrypt"
 	"strconv"
@@ -26,10 +25,10 @@ func NewRm() *Rm {
 	return Rockminer
 }
 
-func InitRm(RmConf config.RmConf) *Rm {
+func InitRm(Protocol, Host string) *Rm {
 	Rockminer = &Rm{
-		Protocol: RmConf.Protocol,
-		Host:     RmConf.Host,
+		Protocol: Protocol,
+		Host:     Host,
 	}
 	return Rockminer
 }
