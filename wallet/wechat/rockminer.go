@@ -5,16 +5,34 @@ import (
 	"errors"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
 	"github.com/RMIO2020/Go-Wallet-Service/common/helper/rsa"
+	"github.com/RMIO2020/Go-Wallet-Service/config"
 	"github.com/mitchellh/mapstructure"
 	"github.com/yuchenfw/gocrypt"
 	"strconv"
 )
 
 const (
-	RMProtocol = "http://"
-	RMHOST     = "api.rockminer.cn"
-	RMPayUrl   = "/open_api/third-pay/wechat"
+	RMPayUrl = "/open_api/third-pay/wechat"
 )
+
+var Rockminer *Rm
+
+type Rm struct {
+	Protocol string
+	Host     string
+}
+
+func NewRm() *Rm {
+	return Rockminer
+}
+
+func InitRm(RmConf config.RmConf) *Rm {
+	Rockminer = &Rm{
+		Protocol: RmConf.Protocol,
+		Host:     RmConf.Host,
+	}
+	return Rockminer
+}
 
 type ThirdPayToRM struct {
 	OrderSn     string  `json:"order_sn"`
@@ -41,10 +59,10 @@ type PayUrl struct {
 	UrlCode   string `json:"url_code"`
 }
 
-func GetPayUrl(Params *ThirdPayToRM) (Url string, err error) {
+func (R *Rm) GetPayUrl(Params *ThirdPayToRM) (Url string, err error) {
 	Url = ""
 	params := getParams(Params)
-	url := RMProtocol + RMHOST + RMPayUrl
+	url := R.Protocol + R.Host + RMPayUrl
 	result, err := request.Request(request.POST, url, params)
 	if err != nil {
 		return
