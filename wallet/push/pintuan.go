@@ -51,6 +51,6 @@ func (P *PinTuan) GetPinTuanParams(Params *ToPinTuan) request.ReqParams {
 func (P *PinTuan) PushPayStatus(Params *ToPinTuan) (result string, err error) {
 	params := P.GetPinTuanParams(Params)
 	url := P.Protocol + P.Host + PayStatusUrl
-	result, err = request.Request(request.PUT, url, params, request.ContentTypJson)
+	result, err = request.Request(request.PUT, url, params, request.ContentTypFormUrl)
 	return
 }
