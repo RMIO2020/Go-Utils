@@ -6,7 +6,7 @@ import (
 )
 
 const (
-	PayStatusUrl = "/order/notice"
+	PayStatusUrl = "/pin/order/notice"
 )
 
 var PinC *PinTuan
