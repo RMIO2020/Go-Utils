@@ -62,7 +62,7 @@ func (R *Rm) GetPayUrl(Params *ThirdPayToRM) (Url string, err error) {
 	Url = ""
 	params := getParams(Params)
 	url := R.Protocol + R.Host + RMPayUrl
-	result, err := request.Request(request.POST, url, params)
+	result, err := request.Request(request.POST, url, params, request.ContentTypFormUrl)
 	if err != nil {
 		return
 	}
