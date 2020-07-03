@@ -39,7 +39,7 @@ type ToPinTuan struct {
 
 func (P *PinTuan) GetPinTuanParams(Params *ToPinTuan) request.ReqParams {
 	var params = request.ReqParams{}
-	params["order_sn"] = Params.OrderNo
+	params["order_no"] = Params.OrderNo
 	params["pay_currency"] = Params.PayCurrency
 	params["pay_protocol"] = Params.PayProtocol
 	params["pay_type"] = Params.PayType
