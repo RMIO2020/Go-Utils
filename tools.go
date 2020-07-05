@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/skip2/go-qrcode"
 	"math/rand"
+	"net/url"
 	"time"
 )
 
@@ -52,6 +53,8 @@ func CreateOrderSn() string {
 
 // CreateQrCode 生成二维码base64
 func CreateQrCodeBase64(username string, secret string, issuer string) (encoded string, err error) {
+	username = url.QueryEscape(username)
+	issuer = url.QueryEscape(issuer)
 	q, err := qrcode.New(fmt.Sprintf("otpauth://totp/%v-%v?secret=%v&issuer=%v", username, issuer, secret, issuer), qrcode.Medium)
 	if err != nil {
 		return
