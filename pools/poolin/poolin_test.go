@@ -25,11 +25,11 @@ func TestPoolIn_ListOfIncome(t *testing.T) {
 	initConf()
 	result, err := PIN.ListOfIncome(&IncomeListParams{
 		Puid:      "9034431",
-		CoinType:  "ZEC",
+		CoinType:  "zec",
 		Page:      1,
 		StartDate: 20200701,
 		EndDate:   20200708,
 	})
-	fmt.Printf("err is %+v", err)
-	fmt.Printf("result is %+v", result)
+	fmt.Printf("err is %+v \n", err)
+	fmt.Printf("result is %+v  \n", result.Data)
 }

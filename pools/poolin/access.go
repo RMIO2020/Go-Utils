@@ -19,7 +19,7 @@ type Params map[string]string
 
 type BaseReq struct {
 	Errors  string      `json:"errors"`
-	ErrNo   string      `json:"err_no"`
+	ErrNo   int64       `json:"err_no"`
 	Data    interface{} `json:"data"`
 	Message string      `json:"message"`
 }

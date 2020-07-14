@@ -32,7 +32,7 @@ type IncomeListRet struct {
 	Total        int64
 }
 
-func (P *PoolIn) ListOfIncome(Params *IncomeListParams) (result string, err error) {
+func (P *PoolIn) ListOfIncome(Params *IncomeListParams) (IncomeList IncomeListRet, err error) {
 	params := request.ReqParams{}
 
 	params["puid"] = Params.Puid
@@ -41,6 +41,11 @@ func (P *PoolIn) ListOfIncome(Params *IncomeListParams) (result string, err erro
 	params["start_date"] = strconv.Itoa(Params.StartDate)
 	params["end_date"] = strconv.Itoa(Params.EndDate)
 
-	result, err = P.Request(GET, HistoryUrl, params)
+	result, err := P.Request(GET, HistoryUrl, params)
+	if err != nil {
+		return
+	}
+	IncomeList = IncomeListRet{}
+	err = CheckBase(result, &IncomeList)
 	return
 }
