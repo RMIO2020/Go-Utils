@@ -1,7 +1,7 @@
 package poolin
 
 import (
-	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
+	"github.com/RMIO2020/Go-Common/helper/request"
 	"strconv"
 )
 
@@ -19,7 +19,7 @@ type IncomeListParams struct {
 
 type IncomeListRet struct {
 	CurrentPage  int64
-	Data         interface{}
+	Data         []IncomeDetails
 	FirstPageUrl string
 	From         int64
 	LastPage     int64
@@ -30,6 +30,28 @@ type IncomeListRet struct {
 	PrevPageUrl  string
 	To           int64
 	Total        int64
+}
+
+type IncomeDetails struct {
+	Date             int64
+	CoinType         string
+	Amount           float64
+	Change           float64
+	ShareAccept      float64
+	ShareUnit        string
+	RejectRate       float64
+	Address          string
+	WalletName       string
+	WalletNameEn     string
+	AddressCreatedAt float64
+	Txhash           string
+	UnpaidReason     string
+	PaymentStatus    string
+	PaidAt           float64
+	CreatedAt        float64
+	Rate             string
+	Coinexchange     string
+	BillType         float64
 }
 
 func (P *PoolIn) ListOfIncome(Params *IncomeListParams) (IncomeList IncomeListRet, err error) {
