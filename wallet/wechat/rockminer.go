@@ -17,18 +17,20 @@ const (
 var Rockminer *Rm
 
 type Rm struct {
-	Protocol string
-	Host     string
+	Protocol    string
+	Host        string
+	ProcessType int64
 }
 
 func NewRm() *Rm {
 	return Rockminer
 }
 
-func InitRm(Protocol, Host string) *Rm {
+func InitRm(Protocol, Host string, ProcessType int64) *Rm {
 	Rockminer = &Rm{
-		Protocol: Protocol,
-		Host:     Host,
+		Protocol:    Protocol,
+		Host:        Host,
+		ProcessType: ProcessType,
 	}
 	return Rockminer
 }
@@ -60,6 +62,7 @@ type PayUrl struct {
 
 func (R *Rm) GetPayUrl(Params *ThirdPayToRM) (Url string, err error) {
 	Url = ""
+	Params.ProcessType = R.ProcessType
 	params := getParams(Params)
 	url := R.Protocol + R.Host + RMPayUrl
 	result, err := request.Request(request.POST, url, params, request.ContentTypFormUrl)
