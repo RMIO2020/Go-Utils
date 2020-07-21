@@ -18,7 +18,7 @@ const (
 type Params map[string]string
 
 type BaseReq struct {
-	Errors  string      `json:"errors"`
+	Errors  interface{} `json:"errors"`
 	ErrNo   int64       `json:"err_no"`
 	Data    interface{} `json:"data"`
 	Message string      `json:"message"`

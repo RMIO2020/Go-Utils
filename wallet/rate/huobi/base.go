@@ -2,7 +2,7 @@ package huobi
 
 import (
 	"fmt"
-	"github.com/RMIO2020/Go-Wallet-Service/utils/wallet/rate"
+	"github.com/RMIO2020/Go-Utils/wallet/rate"
 )
 
 const (
