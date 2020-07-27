@@ -3,8 +3,8 @@ package wechat
 import (
 	"encoding/json"
 	"errors"
-	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
-	"github.com/RMIO2020/Go-Wallet-Service/common/helper/rsa"
+	"github.com/RMIO2020/Go-Common/helper/request"
+	"github.com/RMIO2020/Go-Common/helper/rsa"
 	"github.com/mitchellh/mapstructure"
 	"github.com/yuchenfw/gocrypt"
 	"strconv"

@@ -33,7 +33,7 @@ type IncomeListRet struct {
 }
 
 type IncomeDetails struct {
-	Date             int64
+	Date             int
 	CoinType         string
 	Amount           float64
 	Change           float64
@@ -54,10 +54,12 @@ type IncomeDetails struct {
 	BillType         float64
 }
 
-func (P *PoolIn) ListOfIncome(Params *IncomeListParams) (IncomeList IncomeListRet, err error) {
+func (P *PoolIn) ListOfIncome(Params *IncomeListParams) (List []IncomeDetails, err error) {
 	params := request.ReqParams{}
 
-	params["puid"] = Params.Puid
+	if Params.Puid == "" {
+		params["puid"] = P.Puid
+	}
 	params["coin_type"] = Params.CoinType
 	params["Page"] = strconv.Itoa(Params.Page)
 	params["start_date"] = strconv.Itoa(Params.StartDate)
@@ -67,7 +69,8 @@ func (P *PoolIn) ListOfIncome(Params *IncomeListParams) (IncomeList IncomeListRe
 	if err != nil {
 		return
 	}
-	IncomeList = IncomeListRet{}
+	IncomeList := IncomeListRet{}
 	err = CheckBase(result, &IncomeList)
+	List = IncomeList.Data
 	return
 }

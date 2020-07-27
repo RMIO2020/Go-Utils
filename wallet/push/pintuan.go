@@ -1,7 +1,7 @@
 package push
 
 import (
-	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
+	"github.com/RMIO2020/Go-Common/helper/request"
 	"strconv"
 )
 
