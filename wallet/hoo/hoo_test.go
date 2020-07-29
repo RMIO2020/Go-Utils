@@ -27,7 +27,7 @@ func TestGetAccount(t *testing.T) {
 
 func TestNewAddress(t *testing.T) {
 	p := &AddressWhere{
-		CoinName: "ETH",
+		CoinName: "ZEC",
 		Num:      1,
 	}
 	fmt.Printf("params is %+v \n", p)
