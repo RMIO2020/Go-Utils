@@ -90,6 +90,7 @@ func (H *Hoo) Request(method string, path string, params map[string]string) (res
 	params["client_id"] = H.ClientId
 	params["sign"] = H.SignEcc(params)
 	sorted := H.SortParams(params)
+	fmt.Println("Hoo sorted", sorted)
 	var req *http.Request
 	if method == "POST" {
 		req, _ = http.NewRequest(method, H.HOST+path, strings.NewReader(sorted))
@@ -98,9 +99,9 @@ func (H *Hoo) Request(method string, path string, params map[string]string) (res
 		req, _ = http.NewRequest(method, H.HOST+path+"?"+sorted, strings.NewReader(""))
 	}
 
-	fmt.Println("Client Do......")
+	fmt.Println("Hoo Client Do......")
 	resp, err := client.Do(req)
-	fmt.Println("resp is", resp)
+	fmt.Println("Hoo resp is", resp)
 	if err != nil {
 		return
 	}
