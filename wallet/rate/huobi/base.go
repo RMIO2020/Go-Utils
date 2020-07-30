@@ -6,20 +6,18 @@ import (
 )
 
 const (
-	Api = "https://api.binance.com/api/v3/ticker/price"
+	Host = "https://api.huobi.pro"
 
-	BtcToUsdt = "BTCUSDT"
+	MarketTickersUrl = "/market/tickers"
 )
 
-type Params map[string]string
+func GetMarketTickers() {
+	url := Host + MarketTickersUrl
 
-func GetRate() {
-	params := Params{}
-	params["symbol"] = BtcToUsdt
+	data, err := rate.Request(rate.GET, url, rate.Params{})
+	if err != nil {
+		fmt.Println("err is ", err)
+	}
 
-	data, err := rate.Request(rate.GET, Api, params)
-
-	fmt.Printf("err is %+v \n", err)
-
-	fmt.Printf("result is %+v \n", data)
+	fmt.Println("data is ", data)
 }
