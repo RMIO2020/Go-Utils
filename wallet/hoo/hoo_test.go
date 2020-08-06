@@ -6,12 +6,13 @@ import (
 )
 
 const (
-	ClientId     = ""
-	ClientSecret = ""
-	Host         = ""
+	ClientId     = "UvBeD3EamTaGLM6fx32ZESyGZJnLzN"
+	ClientSecret = "Cibs1MK4paoM3ArkkQ4TS5h6n6WcadWZqPJmsBcx38BZQoDhFJ"
+	Host         = "https://hoozh.com"
+	ApiHost      = "https://api.hoozh.com"
 )
 
-var H = NewHoo(ClientId, ClientSecret, Host)
+var H = NewHoo(ClientId, ClientSecret, Host, ApiHost)
 
 func TestGetAccount(t *testing.T) {
 	p := &AccountWhere{
@@ -49,4 +50,10 @@ func TestWithdraw(t *testing.T) {
 	fmt.Println("err", err)
 	fmt.Println("Address ", hooResp)
 	fmt.Println("Address ", hooData)
+}
+
+func TestHoo_GetTickers(t *testing.T) {
+	data, err := H.GetTickers()
+	fmt.Println("data ", data)
+	fmt.Println("err ", err)
 }
