@@ -1,22 +1,20 @@
 package f2
 
-const ApiUrl = "https://api-prod.poolin.com"
+const ApiUrl = "http://api.f2pool.com"
 
-var PIN *PoolIn
+var PIN *F2
 
-type PoolIn struct {
-	UserName string `json:"puid"`
-	HOST     string `json:"host"`
+type F2 struct {
+	HOST string `json:"host"`
 }
 
-func New() *PoolIn {
+func New() *F2 {
 	return PIN
 }
 
-func Init(UserName string) *PoolIn {
-	PIN = &PoolIn{
-		UserName: UserName,
-		HOST:     ApiUrl,
+func Init() *F2 {
+	PIN = &F2{
+		HOST: ApiUrl,
 	}
 	return PIN
 }

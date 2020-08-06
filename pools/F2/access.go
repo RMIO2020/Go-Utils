@@ -3,7 +3,6 @@ package f2
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/mitchellh/mapstructure"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -25,17 +24,12 @@ type BaseReq struct {
 }
 
 func CheckBase(Message string, result interface{}) (err error) {
-	var data BaseReq
-	err = json.Unmarshal([]byte(Message), &data)
-	if err != nil {
-		return
-	}
-	fmt.Printf("data is %+v \n", data.Data)
-	err = mapstructure.Decode(data.Data, &result)
+	fmt.Printf("data is %+v \n", Message)
+	_ = json.Unmarshal([]byte(Message), &result)
 	return
 }
 
-func (P *PoolIn) SortParams(params map[string]string) string {
+func (P *F2) SortParams(params map[string]string) string {
 	keys := make([]string, len(params))
 	i := 0
 	for k := range params {
@@ -52,7 +46,7 @@ func (P *PoolIn) SortParams(params map[string]string) string {
 	return strings.Join(sorted, "&")
 }
 
-func (P *PoolIn) Request(method string, path string, params map[string]string) (result string, err error) {
+func (P *F2) Request(method string, path string, params map[string]string) (result string, err error) {
 	client := &http.Client{}
 	sorted := P.SortParams(params)
 	var req *http.Request
@@ -68,7 +62,6 @@ func (P *PoolIn) Request(method string, path string, params map[string]string) (
 	if err != nil {
 		return
 	}
-
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	result = string(body)
