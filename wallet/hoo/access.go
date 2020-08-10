@@ -26,13 +26,15 @@ type Hoo struct {
 	ClientId     string
 	ClientSecret string
 	HOST         string
+	ApiHOST      string
 }
 
-func NewHoo(ClientId, ClientSecret, Host string) *Hoo {
+func NewHoo(ClientId, ClientSecret, Host, ApiHost string) *Hoo {
 	return &Hoo{
 		ClientId:     ClientId,
 		ClientSecret: ClientSecret,
 		HOST:         Host,
+		ApiHOST:      ApiHost,
 	}
 }
 
@@ -87,16 +89,27 @@ func (H *Hoo) SignEcc(params map[string]string) (DataUrl string) {
 
 func (H *Hoo) Request(method string, path string, params map[string]string) (result string, err error) {
 	client := &http.Client{}
-	params["client_id"] = H.ClientId
-	params["sign"] = H.SignEcc(params)
-	sorted := H.SortParams(params)
+	Host := H.HOST
+	if params["ApiUrl"] != "" {
+		Host = H.ApiHOST
+	}
+
+	sorted := ""
+	if params["NullParams"] != "" {
+		sorted = ""
+	} else {
+		params["client_id"] = H.ClientId
+		params["sign"] = H.SignEcc(params)
+		sorted = H.SortParams(params)
+	}
+
 	fmt.Println("Hoo sorted", sorted)
 	var req *http.Request
 	if method == "POST" {
-		req, _ = http.NewRequest(method, H.HOST+path, strings.NewReader(sorted))
+		req, _ = http.NewRequest(method, Host+path, strings.NewReader(sorted))
 		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	} else {
-		req, _ = http.NewRequest(method, H.HOST+path+"?"+sorted, strings.NewReader(""))
+		req, _ = http.NewRequest(method, Host+path+"?"+sorted, strings.NewReader(""))
 	}
 
 	fmt.Println("Hoo Client Do......")
