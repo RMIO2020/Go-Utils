@@ -9,9 +9,9 @@ const (
 )
 
 type TickersMarketResp struct {
-	Code    string `json:"code"`
+	Code    int64  `json:"code"`
 	Message string `json:"message"`
-	Data    map[string]string
+	Data    []TickerMarket
 }
 
 type TickerMarket struct {
@@ -26,15 +26,14 @@ type TickerMarket struct {
 	Volume string
 }
 
-func (H *Hoo) GetTickersMarket() (err error, hooResp string) {
-	hooResp, err = H.Request(GET, TickersMarketUrl, map[string]string{
+func (H *Hoo) GetTickersMarket() (err error, data TickersMarketResp) {
+	hooResp, err := H.Request(GET, TickersMarketUrl, map[string]string{
 		"ApiUrl":     "true",
 		"NullParams": "true",
 	})
 	if err != nil {
 		return
 	}
-	var data TickersMarketResp
 	err = json.Unmarshal([]byte(hooResp), &data)
 	return
 }
