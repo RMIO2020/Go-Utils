@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -80,8 +81,7 @@ type GoResponse struct {
 }
 
 // Curl 通用的curl请求
-func (c *clientV1) Curl() (out *GoResponse, err error) {
-	out = &GoResponse{}
+func (c *clientV1) Curl() (out []byte, err error) {
 	inJson, _ := json.Marshal(c.in)
 	req, err := http.NewRequest(c.pattern, c.url, bytes.NewBuffer(inJson))
 	if err != nil {
@@ -102,6 +102,13 @@ func (c *clientV1) Curl() (out *GoResponse, err error) {
 		err = errors.New("http status is error")
 		return
 	}
-	err = json.NewDecoder(rsp.Body).Decode(out)
+	out, err = ioutil.ReadAll(rsp.Body)
+	return
+}
+
+// ToRm 转成rm结构体
+func ToRm(body []byte) (out *RmResponse) {
+	out = &RmResponse{}
+	_ = json.Unmarshal(body, out)
 	return
 }
