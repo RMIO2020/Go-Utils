@@ -2,18 +2,45 @@ package hoo
 
 import (
 	"fmt"
+	"github.com/RMIO2020/Go-Common/helper"
+	"github.com/RMIO2020/Go-Wallet-Service/config"
+	spm_wallet "github.com/RMIO2020/Go-Wallet-Service/link/spm-wallet"
+	"github.com/RMIO2020/Go-Wallet-Service/logger"
+	"go.uber.org/zap"
 	"testing"
 )
 
-const (
-	ClientId     = ""
-	ClientSecret = ""
-	Host         = ""
-)
+var H *Hoo
 
-var H = NewHoo(ClientId, ClientSecret, Host)
+func initDb() {
+	fmt.Println("init db")
+	vHandle := config.New()
+	path, _ := helper.GetProjectRoot()
+	path = path + "/../../../"
+	err := vHandle.InitConfig(path)
+	fmt.Printf(" Config  %+v \n", vHandle)
+	if err != nil {
+		panic("init config failed:" + err.Error())
+		return
+	}
+	// init logger
+	if err := logger.InitLogger(&vHandle.Config.Log); err != nil {
+		logger.Error("init logger failed", zap.String("error", err.Error()))
+		panic("init logger failed:" + err.Error())
+		return
+	}
+
+	// init MySQL
+	if err := spm_wallet.InitMySQL(&vHandle.Config.SpmWallet); err != nil {
+		panic("init mysql failed:" + err.Error())
+		return
+	}
+
+	H = NewHoo(vHandle.Config.Hoo.ClientId, vHandle.Config.Hoo.ClientSecret, vHandle.Config.Hoo.HOST, vHandle.Config.Hoo.ApiHost)
+}
 
 func TestGetAccount(t *testing.T) {
+	initDb()
 	p := &AccountWhere{
 		CoinName: "BTC",
 	}
@@ -26,8 +53,9 @@ func TestGetAccount(t *testing.T) {
 }
 
 func TestNewAddress(t *testing.T) {
+	initDb()
 	p := &AddressWhere{
-		CoinName: "ETH",
+		CoinName: "ZEC",
 		Num:      1,
 	}
 	fmt.Printf("params is %+v \n", p)
@@ -37,6 +65,7 @@ func TestNewAddress(t *testing.T) {
 }
 
 func TestWithdraw(t *testing.T) {
+	initDb()
 	p := &WithdrawWhere{
 		CoinName:        "USDT",
 		TokenName:       "USDT-ERC20",
@@ -49,4 +78,13 @@ func TestWithdraw(t *testing.T) {
 	fmt.Println("err", err)
 	fmt.Println("Address ", hooResp)
 	fmt.Println("Address ", hooData)
+}
+
+func TestGetTickersMarket(t *testing.T) {
+	initDb()
+
+	err, abc := H.GetTickersMarket()
+
+	fmt.Println("err ", err)
+	fmt.Printf("abc %+v", abc)
 }

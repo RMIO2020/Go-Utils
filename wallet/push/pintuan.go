@@ -1,7 +1,7 @@
 package push
 
 import (
-	"github.com/RMIO2020/Go-Wallet-Service/common/helper/request"
+	"github.com/RMIO2020/Go-Common/helper/request"
 	"strconv"
 )
 
@@ -35,6 +35,7 @@ type ToPinTuan struct {
 	PayType     string  `json:"pay_type"`
 	PayStatus   string  `json:"pay_status"`
 	PayAmount   float64 `json:"pay_amount"`
+	OrderType   string  `json:"order_type"`
 }
 
 func (P *PinTuan) GetPinTuanParams(Params *ToPinTuan) request.ReqParams {
@@ -42,6 +43,7 @@ func (P *PinTuan) GetPinTuanParams(Params *ToPinTuan) request.ReqParams {
 	params["order_no"] = Params.OrderNo
 	params["pay_currency"] = Params.PayCurrency
 	params["pay_protocol"] = Params.PayProtocol
+	params["order_type"] = Params.OrderType
 	params["pay_type"] = Params.PayType
 	params["pay_status"] = Params.PayStatus
 	params["pay_amount"] = strconv.FormatFloat(Params.PayAmount, 'G', -1, 64)
