@@ -8,6 +8,7 @@ import (
 	"github.com/skip2/go-qrcode"
 	"math/rand"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -67,4 +68,9 @@ func CreateQrCodeBase64(username string, secret string, issuer string) (encoded 
 	}
 	encoded = fmt.Sprintf("data:image/jpg;base64,%v", base64.StdEncoding.EncodeToString(png))
 	return
+}
+
+// PlusDeal 加号处理
+func PlusDeal(in string) string {
+	return "+" + strings.TrimLeft(in, "+")
 }
