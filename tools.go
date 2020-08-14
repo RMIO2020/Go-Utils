@@ -72,5 +72,6 @@ func CreateQrCodeBase64(username string, secret string, issuer string) (encoded 
 
 // PlusDeal 加号处理
 func PlusDeal(in string) string {
+	in = strings.Trim(in, " ")
 	return "+" + strings.TrimLeft(in, "+")
 }
