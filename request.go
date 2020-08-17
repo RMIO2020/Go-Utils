@@ -112,3 +112,10 @@ func ToRm(body []byte) (out *RmResponse) {
 	_ = json.Unmarshal(body, out)
 	return
 }
+
+// ToRm 转成go结构体
+func ToGo(body []byte) (out *GoResponse) {
+	out = &GoResponse{}
+	_ = json.Unmarshal(body, out)
+	return
+}
