@@ -20,6 +20,7 @@ type IncomeListRet struct {
 	HashesLastHour              float64            `json:"hashes_last_hour"`
 	WorkerLengthOnline          float64            `json:"worker_length_online"`
 	PayoutHistory               [][]interface{}    `json:"payout_history"`
+	PayoutHistoryFee            [][]interface{}    `json:"payout_history_fee"`
 	WorkerLength                int                `json:"worker_length"`
 	Hashrate                    float64            `json:"hashrate"`
 }
@@ -47,9 +48,10 @@ func (P *F2) ListOfIncome(user string) (List []*PayoutHistory, err error) {
 
 func (P *IncomeListRet) GetPayoutHistory() (PayoutHistoryData []*PayoutHistory) {
 	PayoutHistoryRet := P.PayoutHistory
+	PayoutHistoryFee := P.PayoutHistoryFee
 	dataPattern := `\d{4}.\d{1,2}.\d{1,2}`
 	reg := regexp.MustCompile(dataPattern)
-	for _, v := range PayoutHistoryRet {
+	for k, v := range PayoutHistoryRet {
 		if len(v) < 3 {
 			// 若长度小于3则跳过
 			continue
@@ -74,6 +76,20 @@ func (P *IncomeListRet) GetPayoutHistory() (PayoutHistoryData []*PayoutHistory) 
 			TxId:   txid,
 			Income: income,
 		}
+
+		timeStr, ok = PayoutHistoryFee[k][0].(string)
+		if !ok {
+			continue
+		}
+		matchDate = reg.FindString(timeStr)
+		date2, err := time.Parse("2006-01-02", matchDate)
+		if err != nil {
+			continue
+		}
+		if date == date2 {
+			history.Income += PayoutHistoryFee[k][2].(float64)
+		}
+
 		PayoutHistoryData = append(PayoutHistoryData, history)
 	}
 	return
