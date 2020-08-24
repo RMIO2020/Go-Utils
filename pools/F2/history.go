@@ -76,18 +76,19 @@ func (P *IncomeListRet) GetPayoutHistory() (PayoutHistoryData []*PayoutHistory) 
 			TxId:   txid,
 			Income: income,
 		}
-
-		timeStr, ok = PayoutHistoryFee[k][0].(string)
-		if !ok {
-			continue
-		}
-		matchDate = reg.FindString(timeStr)
-		date2, err := time.Parse("2006-01-02", matchDate)
-		if err != nil {
-			continue
-		}
-		if date == date2 {
-			history.Income += PayoutHistoryFee[k][2].(float64)
+		if len(PayoutHistoryFee) > 0 {
+			timeStr, ok = PayoutHistoryFee[k][0].(string)
+			if !ok {
+				continue
+			}
+			matchDate = reg.FindString(timeStr)
+			date2, err := time.Parse("2006-01-02", matchDate)
+			if err != nil {
+				continue
+			}
+			if date == date2 {
+				history.Income += PayoutHistoryFee[k][2].(float64)
+			}
 		}
 
 		PayoutHistoryData = append(PayoutHistoryData, history)
