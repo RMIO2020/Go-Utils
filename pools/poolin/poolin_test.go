@@ -10,12 +10,12 @@ func initConf(Puid, Token string) {
 }
 
 func TestPoolIn_ListOfIncome(t *testing.T) {
-	initConf("9114639", "wowzEqrkJOW5AJNoo9Aj72NyATX3ve9Ye85A0oVG1q9hLYJDQsSgec0M69d59gSK")
+	initConf("9123974", "wowA8GUkHvzF5kHKHQv6k3SExPu1nhBL8iEwfxNQGxaTaNZnLFikSR64aAUQaNm5")
 	result, err := PIN.ListOfIncome(&IncomeListParams{
-		CoinType:  "zec",
+		CoinType:  "btc",
 		Page:      0,
-		StartDate: 20200823,
-		EndDate:   20200823,
+		StartDate: 20200701,
+		EndDate:   20200831,
 	})
 	fmt.Printf("err is %+v \n", err)
 	//fmt.Printf("result is %+v  \n", result.Data)
