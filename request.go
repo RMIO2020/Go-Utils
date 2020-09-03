@@ -99,7 +99,17 @@ func (c *clientV1) Curl() (out []byte, err error) {
 	defer body.Close()
 
 	if rsp.StatusCode != http.StatusOK {
-		err = errors.New("http status is error")
+		tmp, err1 := ioutil.ReadAll(rsp.Body)
+		if err1 != nil {
+			err = errors.New("remote: status " + string(rsp.StatusCode) + "http status is error")
+			return
+		}
+		data := ToGo(tmp)
+		if len(data.Msg) > 0 {
+			err = errors.New("remote: " + data.Msg)
+		} else {
+			err = errors.New("remote: status " + string(rsp.StatusCode) + "http status is error")
+		}
 		return
 	}
 	out, err = ioutil.ReadAll(rsp.Body)
