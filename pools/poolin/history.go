@@ -61,7 +61,7 @@ func (P *PoolIn) ListOfIncome(Params *IncomeListParams) (List []IncomeDetails, e
 		params["puid"] = P.Puid
 	}
 	params["coin_type"] = Params.CoinType
-	params["Page"] = strconv.Itoa(Params.Page)
+	params["page"] = strconv.Itoa(Params.Page)
 	params["start_date"] = strconv.Itoa(Params.StartDate)
 	params["end_date"] = strconv.Itoa(Params.EndDate)
 
