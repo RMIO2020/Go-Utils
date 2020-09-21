@@ -2,6 +2,7 @@ package excel
 
 import (
 	"fmt"
+	"github.com/RMIO2020/GO-PIN/config"
 	utils "github.com/RMIO2020/Go-Utils"
 	"github.com/tealeg/xlsx"
 )
@@ -48,7 +49,9 @@ func WriteExcel(title string, field []string, data [][]interface{}) (saveName st
 			cell.SetValue(v2)
 		}
 	}
-	saveName = fmt.Sprintf("%v%v%v.xlsx", "./", title, utils.CreateOrderSn())
-	err = file.Save(saveName)
+	fileName := title + "-" + utils.CreateOrderSn() + ".xlsx"
+	filePath := config.Config.File.AbsolutePath + "/" + config.Config.File.RelativePath + "/" + fileName
+	err = file.Save(filePath)
+	saveName = config.Config.File.Domain + "/" + fileName
 	return
 }

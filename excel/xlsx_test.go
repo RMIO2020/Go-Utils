@@ -1,10 +1,17 @@
 package excel
 
 import (
+	"github.com/RMIO2020/GO-PIN/config"
 	"testing"
 )
 
 func TestListOfIncome(t *testing.T) {
+	config.Config = &config.AppConfig{}
+	config.Config.File = config.File{
+		Domain:       "http://127.0.0.1:8091/static",
+		AbsolutePath: "E:/project/file-service/static/excel",
+		RelativePath: "",
+	}
 	title := "测试"
 	field := []string{
 		"栏目名1",
