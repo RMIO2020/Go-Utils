@@ -52,7 +52,7 @@ func WriteExcel(title string, field []string, data [][]interface{}) (saveName st
 	fileName := title + "-" + utils.CreateOrderSn() + ".xlsx"
 	filePath := config.Config.File.AbsolutePath + "/" + config.Config.File.RelativePath + "/" + fileName
 	err = file.Save(filePath)
-	saveName = config.Config.File.Domain + "/" + fileName
+	saveName = config.Config.File.Domain + "/" + config.Config.File.RelativePath + "/" + fileName
 
 	return
 }
