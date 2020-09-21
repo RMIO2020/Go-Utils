@@ -53,5 +53,6 @@ func WriteExcel(title string, field []string, data [][]interface{}) (saveName st
 	filePath := config.Config.File.AbsolutePath + "/" + config.Config.File.RelativePath + "/" + fileName
 	err = file.Save(filePath)
 	saveName = config.Config.File.Domain + "/" + fileName
+
 	return
 }
