@@ -5,15 +5,14 @@ import (
 	"testing"
 )
 
-const (
-	ClientId     = ""
-	ClientSecret = ""
-	Host         = ""
-)
+var H *Hoo
 
-var H = NewHoo(ClientId, ClientSecret, Host)
+func initDb() {
+	fmt.Println("init db")
+}
 
 func TestGetAccount(t *testing.T) {
+	initDb()
 	p := &AccountWhere{
 		CoinName: "BTC",
 	}
@@ -26,8 +25,9 @@ func TestGetAccount(t *testing.T) {
 }
 
 func TestNewAddress(t *testing.T) {
+	initDb()
 	p := &AddressWhere{
-		CoinName: "ETH",
+		CoinName: "ZEC",
 		Num:      1,
 	}
 	fmt.Printf("params is %+v \n", p)
@@ -37,6 +37,7 @@ func TestNewAddress(t *testing.T) {
 }
 
 func TestWithdraw(t *testing.T) {
+	initDb()
 	p := &WithdrawWhere{
 		CoinName:        "USDT",
 		TokenName:       "USDT-ERC20",
@@ -49,4 +50,13 @@ func TestWithdraw(t *testing.T) {
 	fmt.Println("err", err)
 	fmt.Println("Address ", hooResp)
 	fmt.Println("Address ", hooData)
+}
+
+func TestGetTickersMarket(t *testing.T) {
+	initDb()
+
+	err, abc := H.GetTickersMarket()
+
+	fmt.Println("err ", err)
+	fmt.Printf("abc %+v", abc)
 }

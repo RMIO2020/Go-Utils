@@ -14,8 +14,11 @@ const (
 	GET  = "GET"
 )
 
-func Request(method string, path string, params map[string]string) (result string, err error) {
+type Params map[string]string
+
+func Request(method string, path string, params Params) (result string, err error) {
 	sorted := SortParams(params)
+	fmt.Println("Rate sorted is", sorted)
 	c := &http.Client{}
 	var req *http.Request
 	if method == POST {
@@ -25,9 +28,9 @@ func Request(method string, path string, params map[string]string) (result strin
 		req, _ = http.NewRequest(method, path+"?"+sorted, strings.NewReader(""))
 	}
 
-	fmt.Println("Client Do......")
+	fmt.Println("Rate Client Do......")
 	resp, err := c.Do(req)
-	fmt.Println("resp is", resp)
+	fmt.Println("Rate resp is", resp)
 	if err != nil {
 		return
 	}
