@@ -18,7 +18,7 @@ func WriteExcel(title string, field []string, data [][]interface{}) (saveName st
 	}
 	// 设置标题
 	titleStyle := xlsx.NewStyle()
-	titleStyle.Font.Size = 16
+	titleStyle.Font.Size = 18
 	titleStyle.Font.Bold = true
 	titleStyle.Alignment.Horizontal = "center"
 	titleStyle.Alignment.Vertical = "center"
@@ -31,7 +31,6 @@ func WriteExcel(title string, field []string, data [][]interface{}) (saveName st
 
 	// 设置栏目名
 	columnStyle := xlsx.NewStyle()
-	columnStyle.Font.Size = 16
 	columnStyle.Alignment.Horizontal = "center"
 	columnStyle.Alignment.Vertical = "center"
 	column := s.AddRow()
