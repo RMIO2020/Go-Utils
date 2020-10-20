@@ -18,12 +18,12 @@ func WriteExcel(title string, field []string, data [][]interface{}) (saveName st
 	}
 	// 设置标题
 	titleStyle := xlsx.NewStyle()
-	titleStyle.Font.Size = 18
+	titleStyle.Font.Size = 16
 	titleStyle.Font.Bold = true
 	titleStyle.Alignment.Horizontal = "center"
 	titleStyle.Alignment.Vertical = "center"
 	titleName := s.AddRow()
-	titleName.SetHeightCM(2)
+	titleName.SetHeightCM(1.5)
 	cell := titleName.AddCell()
 	cell.Value = title
 	cell.Merge(len(field)-1, 0)
