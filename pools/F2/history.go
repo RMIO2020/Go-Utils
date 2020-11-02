@@ -82,7 +82,7 @@ func (P *IncomeListRet) GetPayoutHistory() (PayoutHistoryData []*PayoutHistory) 
 				continue
 			}
 			matchDate = reg.FindString(timeStr)
-			date2, err := time.Parse("2006-01-02", matchDate)
+			date2, err := time.ParseInLocation("2006-01-02", matchDate, time.Local)
 			if err != nil {
 				continue
 			}
