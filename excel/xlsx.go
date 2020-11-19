@@ -23,7 +23,7 @@ func WriteExcel(title string, field []string, data [][]interface{}) (saveName st
 	titleStyle.Alignment.Horizontal = "center"
 	titleStyle.Alignment.Vertical = "center"
 	titleName := s.AddRow()
-	titleName.SetHeightCM(2)
+	titleName.SetHeightCM(1.5)
 	cell := titleName.AddCell()
 	cell.Value = title
 	cell.Merge(len(field)-1, 0)
@@ -31,7 +31,6 @@ func WriteExcel(title string, field []string, data [][]interface{}) (saveName st
 
 	// 设置栏目名
 	columnStyle := xlsx.NewStyle()
-	columnStyle.Font.Size = 16
 	columnStyle.Alignment.Horizontal = "center"
 	columnStyle.Alignment.Vertical = "center"
 	column := s.AddRow()
