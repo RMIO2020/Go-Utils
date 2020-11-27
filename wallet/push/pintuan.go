@@ -36,6 +36,7 @@ type ToPinTuan struct {
 	PayStatus   string  `json:"pay_status"`
 	PayAmount   float64 `json:"pay_amount"`
 	OrderType   string  `json:"order_type"`
+	Platform    string  `json:"platform"`
 }
 
 func (P *PinTuan) GetPinTuanParams(Params *ToPinTuan) request.ReqParams {
