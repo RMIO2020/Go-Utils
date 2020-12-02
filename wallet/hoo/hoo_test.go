@@ -2,6 +2,7 @@ package hoo
 
 import (
 	"fmt"
+	"github.com/RMIO2020/Go-Utils/wallet/hoo"
 	"testing"
 )
 
@@ -59,4 +60,32 @@ func TestGetTickersMarket(t *testing.T) {
 
 	fmt.Println("err ", err)
 	fmt.Printf("abc %+v", abc)
+}
+
+func TestSignEcc(t *testing.T) {
+	s := hoo.NewHoo("UvBeD3EamTaGLM6fx32ZESyGZJnLzN", "Cibs1MK4paoM3ArkkQ4TS5h6n6WcadWZqPJmsBcx38BZQoDhFJ", "https://www.hoozh.com", "https://api.hoolgd.com")
+	Params := map[string]string{
+		"sign":           "96bd4770e9b66fafc39fb11077baefee9f25805926e216ad1eac3e7db7b26d0e",
+		"chain_name":     "ETH",
+		"coin_name":      "USDT-ERC20",
+		"alias":          "USDT",
+		"trad_type":      "2",
+		"block_height":   "11364984",
+		"transaction_id": "0x8b957da4b462fdd2febe0021773cafab2548aea69be967e11573a0f50df95c14",
+		"trx_n":          "0", "confirmations": "6",
+		"from_address": "0x008d44a22df16518ea360dacdea5fb8cf6717a9e",
+		"to_address":   "0x00a4d4a5ddc78860cdce8e051f2f094fe388a406",
+		"memo":         "", "amount": "2825.782881",
+		"fee": "0", "contract_address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
+		"outer_order_no": "USDT-ERC20_00890502",
+		"confirm_time":   "1606806616",
+		"message":        "success", "Status": "",
+		"Currency": "",
+		"Protocol": "",
+		"WalletId": "",
+		"Uid":      "",
+		"Platform": "",
+	}
+	str := s.SignEcc(Params)
+	fmt.Println(str)
 }
