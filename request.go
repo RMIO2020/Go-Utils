@@ -80,6 +80,13 @@ type GoResponse struct {
 	Msg  string      `json:"message"`
 }
 
+// GoJavaResponse java响应
+type GoJavaResponse struct {
+	Code int         `json:"code"`
+	Data interface{} `json:"data"`
+	Msg  string      `json:"message"`
+}
+
 // Curl 通用的curl请求
 func (c *clientV1) Curl() (out []byte, err error) {
 	inJson, _ := json.Marshal(c.in)
@@ -126,6 +133,13 @@ func ToRm(body []byte) (out *RmResponse) {
 // ToRm 转成go结构体
 func ToGo(body []byte) (out *GoResponse) {
 	out = &GoResponse{}
+	_ = json.Unmarshal(body, out)
+	return
+}
+
+// To20Java 转成钱包2.0java结构体
+func To20Java(body []byte) (out *GoJavaResponse) {
+	out = &GoJavaResponse{}
 	_ = json.Unmarshal(body, out)
 	return
 }
