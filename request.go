@@ -87,6 +87,47 @@ type GoJavaResponse struct {
 	Msg  string      `json:"message"`
 }
 
+// CurlGet 通用的curl的get请求
+func (c *clientV1) CurlGet(query map[string]string) (out []byte, err error) {
+	req, err := http.NewRequest(c.pattern, c.url, nil)
+	if err != nil {
+		return
+	}
+	if len(query) > 0 {
+		q := req.URL.Query()
+		for k, v := range query {
+			q.Add(k, v)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+	for k, v := range c.header {
+		req.Header.Set(k, v)
+	}
+	rsp, err := c.httpClient.Do(req)
+	if err != nil {
+		return
+	}
+	body := rsp.Body
+	defer body.Close()
+
+	if rsp.StatusCode != http.StatusOK {
+		tmp, err1 := ioutil.ReadAll(rsp.Body)
+		if err1 != nil {
+			err = errors.New("remote: status " + string(rsp.StatusCode) + "http status is error")
+			return
+		}
+		data := ToGo(tmp)
+		if len(data.Msg) > 0 {
+			err = errors.New("remote: " + data.Msg)
+		} else {
+			err = errors.New("remote: status " + string(rsp.StatusCode) + "http status is error")
+		}
+		return
+	}
+	out, err = ioutil.ReadAll(rsp.Body)
+	return
+}
+
 // Curl 通用的curl请求
 func (c *clientV1) Curl() (out []byte, err error) {
 	inJson, _ := json.Marshal(c.in)
