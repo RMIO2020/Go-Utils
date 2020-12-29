@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	RMPayUrl = "/open_api/third-pay/wechat"
+	RMPayUrl     = "/open_api/third-pay/wechat"
+	RMPayUrlJava = "/pay/weixin/order"
 )
 
 var Rockminer *Rm
@@ -64,7 +65,8 @@ func (R *Rm) GetPayUrl(Params *ThirdPayToRM) (Url string, err error) {
 	Url = ""
 	Params.ProcessType = R.ProcessType
 	params := getParams(Params)
-	url := R.Protocol + R.Host + RMPayUrl
+	//url := R.Protocol + R.Host + RMPayUrl
+	url := R.Protocol + R.Host + RMPayUrlJava
 	result, err := request.Request(request.POST, url, params, request.ContentTypFormUrl)
 	if err != nil {
 		return
