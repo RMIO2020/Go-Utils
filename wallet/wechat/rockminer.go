@@ -3,6 +3,7 @@ package wechat
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/RMIO2020/Go-Common/helper/request"
 	"github.com/RMIO2020/Go-Common/helper/rsa"
 	"github.com/mitchellh/mapstructure"
@@ -69,11 +70,13 @@ func (R *Rm) GetPayUrl(Params *ThirdPayToRM) (Url string, err error) {
 	//url := R.Protocol + R.Host + RMPayUrlJava
 	url := "http://59.110.62.164:9529" + RMPayUrlJava
 	result, err := request.Request(request.POST, url, params, request.ContentTypFormUrl)
+	fmt.Println(result)
 	if err != nil {
 		return
 	}
 	var PayData PayUrl
 	err = checkBase(result, &PayData)
+	fmt.Println(PayData, err)
 	Url = PayData.Url
 	return
 }
