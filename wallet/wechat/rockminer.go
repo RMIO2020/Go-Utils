@@ -69,6 +69,7 @@ func (R *Rm) GetPayUrl(Params *ThirdPayToRM) (Url string, err error) {
 	//url := R.Protocol + R.Host + RMPayUrl
 	//url := R.Protocol + R.Host + RMPayUrlJava
 	url := "http://59.110.62.164:9529" + RMPayUrlJava
+	fmt.Println(params)
 	result, err := request.Request(request.POST, url, params, request.ContentTypFormUrl)
 	fmt.Println(result)
 	if err != nil {
