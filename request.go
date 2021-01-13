@@ -146,7 +146,7 @@ func (c *clientV1) Curl() (out []byte, err error) {
 	}
 	body := rsp.Body
 	defer body.Close()
-
+	fmt.Println(c.pattern, c.url)
 	if rsp.StatusCode != http.StatusOK {
 		tmp, err1 := ioutil.ReadAll(rsp.Body)
 		if err1 != nil {
