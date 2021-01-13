@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 )
@@ -161,6 +162,7 @@ func (c *clientV1) Curl() (out []byte, err error) {
 		return
 	}
 	out, err = ioutil.ReadAll(rsp.Body)
+	fmt.Println(c.pattern, c.url, string(out))
 	return
 }
 
