@@ -149,6 +149,7 @@ func (c *clientV1) Curl() (out []byte, err error) {
 	fmt.Println(c.pattern, c.url)
 	if rsp.StatusCode != http.StatusOK {
 		tmp, err1 := ioutil.ReadAll(rsp.Body)
+		fmt.Println("remote request ", c.url, " fail: response:", string(tmp))
 		if err1 != nil {
 			err = errors.New("remote: status " + string(rsp.StatusCode) + "http status is error")
 			return
