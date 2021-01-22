@@ -147,23 +147,20 @@ func (c *clientV1) Curl() (out []byte, err error) {
 	body := rsp.Body
 	defer body.Close()
 	fmt.Println(c.pattern, c.url)
+	out, err = ioutil.ReadAll(rsp.Body)
+	if err != nil {
+		return
+	}
+	fmt.Println(c.pattern, c.url, string(out))
 	if rsp.StatusCode != http.StatusOK {
-		tmp, err1 := ioutil.ReadAll(rsp.Body)
-		fmt.Println("remote request ", c.url, " fail: response:", string(tmp))
-		if err1 != nil {
-			err = errors.New("remote: status " + string(rsp.StatusCode) + "http status is error")
-			return
-		}
-		data := ToGo(tmp)
+		data := ToGo(out)
 		if len(data.Msg) > 0 {
 			err = errors.New("remote: " + data.Msg)
 		} else {
-			err = errors.New("remote: status " + string(rsp.StatusCode) + "http status is error")
+			//err = errors.New("remote: status " + string(rsp.StatusCode) + " http status is error")
+			err = errors.New(fmt.Sprintf("remote: status %d http status is error", rsp.StatusCode))
 		}
-		return
 	}
-	out, err = ioutil.ReadAll(rsp.Body)
-	fmt.Println(c.pattern, c.url, string(out))
 	return
 }
 
