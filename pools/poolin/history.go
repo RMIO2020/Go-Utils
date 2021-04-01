@@ -34,7 +34,7 @@ type IncomeListRet struct {
 
 type IncomeDetails struct {
 	Date             int
-	CoinType         string
+	CoinType         string `mapstructure:"coin_type"`
 	Amount           float64
 	Change           float64
 	ShareAccept      float64
