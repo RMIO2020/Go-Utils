@@ -11,9 +11,9 @@ func initConf(Puid, Token string) {
 
 func TestPoolIn_ListOfIncome(t *testing.T) {
 	//initConf("9153598", "wowrAsFD2hBxdOWwyDqpNEq0MWa8jKPl2skfAv0Svtm3x4nL7MLG2Aqns6UeoiVU")
-	initConf("9114639", "wowapZmxqTiyHBTokTjn4NcjJ1AYIlYp52DLeN3ifHEghrPZ7sJutWCsI73U8RtU")
+	initConf("9199959", "wowJUxTE5nbzFlrhLNEYascBvLOiyDqazQQ96UesNpUr0t1jugzzoLS8rCWAMLDf")
 	result, err := PIN.ListOfIncome(&IncomeListParams{
-		CoinType: "zec",
+		CoinType: "eth",
 		//Page:      0,
 		//StartDate: ,
 		//EndDate:   ,
