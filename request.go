@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/RMIO2020/Go-User-Service/logger"
+	"go.uber.org/zap"
 	"io/ioutil"
 	"net/http"
 )
@@ -113,6 +115,7 @@ func (c *clientV1) CurlGet(query map[string]string) (out []byte, err error) {
 
 	if rsp.StatusCode != http.StatusOK {
 		tmp, err1 := ioutil.ReadAll(rsp.Body)
+		logger.Warn("curl get:", zap.String("url", c.url), zap.String("pattern", c.pattern), zap.String("error message", string(tmp)))
 		if err1 != nil {
 			err = errors.New("remote: status " + string(rsp.StatusCode) + "http status is error")
 			return
