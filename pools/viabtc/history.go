@@ -95,7 +95,7 @@ func (P *IncomeRet) GetPayoutHistory() (PayoutHistoryData []*PayoutHistory) {
 			income float64
 		)
 		income, _ = strconv.ParseFloat(v.TotalProfit, 64)
-		txid := v.Date
+		txid := "tx-" + v.Date
 		if income == 0 {
 			continue
 		}
