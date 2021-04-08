@@ -12,14 +12,18 @@ import (
 )
 
 type IncomeRet struct {
-	Code int `json:"code"`
-	Data DataRet
+	Code    int `json:"code"`
+	Data    DataRet
+	Message int `json:"message"`
 }
 
 type DataRet struct {
-	Code     int             `json:"code"`
-	CurrPage int             `json:"curr_page"`
-	Data     []IncomeListRet `json:"Data"`
+	Code      int             `json:"code"`
+	CurrPage  int             `json:"curr_page"`
+	Data      []IncomeListRet `json:"Data"`
+	HasNext   int             `json:"has_next"`
+	Total     int             `json:"total"`
+	TotalPage int             `json:"total_page"`
 }
 
 type IncomeListRet struct {
@@ -44,6 +48,8 @@ func (P *Viabtc) ListOfIncome(xApiKey string, currency string) (List []*PayoutHi
 	}
 	q := req.URL.Query()
 	q.Add("coin", currency)
+	req.URL.RawQuery = q.Encode()
+	req.Header.Set("X-API-KEY", xApiKey)
 	client := &http.Client{}
 	rsp, err := client.Do(req)
 	if err != nil {
