@@ -29,7 +29,7 @@ func CheckBase(Message string, result interface{}) (err error) {
 	return
 }
 
-func (P *F2) SortParams(params map[string]string) string {
+func (P *Viabtc) SortParams(params map[string]string) string {
 	keys := make([]string, len(params))
 	i := 0
 	for k := range params {
@@ -46,7 +46,7 @@ func (P *F2) SortParams(params map[string]string) string {
 	return strings.Join(sorted, "&")
 }
 
-func (P *F2) Request(method string, path string, params map[string]string) (result string, err error) {
+func (P *Viabtc) Request(method string, path string, params map[string]string) (result string, err error) {
 	client := &http.Client{}
 	sorted := P.SortParams(params)
 	var req *http.Request

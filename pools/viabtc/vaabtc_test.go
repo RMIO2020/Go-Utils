@@ -8,7 +8,7 @@ import (
 func TestListOfIncome(t *testing.T) {
 	Init()
 	user := "07dfb1b2eab13248d4d1d3764f42d0c1"
-	List, err := PIN.ListOfIncome(user)
+	List, err := PIN.ListOfIncome(user, "hns")
 	if err != nil {
 		fmt.Println("err", err.Error())
 	}

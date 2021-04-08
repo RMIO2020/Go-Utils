@@ -2,6 +2,7 @@ package viabtc
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/RMIO2020/GO-PIN/logger"
 	"go.uber.org/zap"
 	"io/ioutil"
@@ -52,16 +53,21 @@ func (P *Viabtc) ListOfIncome(xApiKey string, currency string) (List []*PayoutHi
 	defer body.Close()
 
 	if rsp.StatusCode != http.StatusOK {
-		tmp, err := ioutil.ReadAll(rsp.Body)
+		tmp, err1 := ioutil.ReadAll(rsp.Body)
 		logger.Warn("curl get viabtc data, fail:", zap.String("url", P.HOST+"/res/openapi/v1/profit/history"), zap.String("pattern", http.MethodGet), zap.String("error message", string(tmp)))
-		if err != nil {
+		if err1 != nil {
+			err = err1
 			return
 		}
 		return
 	}
 	out, err := ioutil.ReadAll(rsp.Body)
+	if err != nil {
+		return
+	}
 	ret := IncomeRet{}
 	_ = json.Unmarshal(out, &ret)
+	fmt.Println("viabtc response data:", ret)
 	List = ret.GetPayoutHistory()
 	return
 }
